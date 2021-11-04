@@ -10,7 +10,7 @@ authRouter.post(
 
         const newUser = new User({
 
-            username: req.body.username,
+            fullname: req.body.fullname,
             email: req.body.email,
             password:CryptoJs.AES.encrypt
             (
@@ -18,6 +18,7 @@ authRouter.post(
                 process.env.PASS_SEC
                 ).toString()
         });
+         confirmPassword: req.body.confirmPassword,
 
         try{
             const savedUser = await newUser.save();
@@ -37,7 +38,7 @@ authRouter.post(
 
         try{
             const user = await User.findOne({
-                username: req.body.username
+                email: req.body.email
             });
             !user && res.status.json(401).json("Wrong credentials.....")
 
